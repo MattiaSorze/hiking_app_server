@@ -53,5 +53,4 @@ public class Application {
 		bean.setOrder(0);
 		return bean;
 	}
-
 }
