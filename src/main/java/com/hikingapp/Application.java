@@ -39,7 +39,6 @@ public class Application {
 
 		};
 	}
-
 	@Bean
 	public FilterRegistrationBean corsFilter() {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
