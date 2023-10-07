@@ -28,11 +28,17 @@ public class HikingDataFactory {
 		catch(Exception e) {
 			
 		}
+		try{
+			hikingDataEntity.setImageData(serializeGpxDataTO(hikingDataTO.getImageData()));
+		}
+		catch(Exception e){
+
+		}
 		
 		return hikingDataEntity;
 	}
 	
-	public static byte[] serializeGpxDataTO(GpxDataTO gpxDataTO) throws IOException {
+	public static byte[] serializeGpxDataTO(Object gpxDataTO) throws IOException {
 	    ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	    ObjectOutputStream oos = new ObjectOutputStream(baos);
 	    oos.writeObject(gpxDataTO);
@@ -40,10 +46,10 @@ public class HikingDataFactory {
 	    return baos.toByteArray();
 	}
 
-	public static GpxDataTO deserializeGpxDataTO(byte[] bytes) throws IOException, ClassNotFoundException {
+	public static Object deserializeGpxDataTO(byte[] bytes) throws IOException, ClassNotFoundException {
 	    ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
 	    ObjectInputStream ois = new ObjectInputStream(bais);
-	    GpxDataTO gpxDataTO = (GpxDataTO) ois.readObject();
+	    Object gpxDataTO = ois.readObject();
 	    ois.close();
 	    return gpxDataTO;
 	}

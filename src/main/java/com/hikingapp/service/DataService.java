@@ -2,7 +2,9 @@ package com.hikingapp.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
 
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,8 @@ public class DataService {
 
 	@Autowired
 	HikingDataRepository hikingDataRepo;
+
+	private static final Logger logger = LoggerFactory.getLogger(DataService.class);
 	
 	public List<HikingDataTO> getHikingData(){
 		List<HikingData> hikingDataList = hikingDataRepo.getHikingData();
@@ -33,11 +37,18 @@ public class DataService {
 			singleHikingTO.setStatus(singleHiking.getStatus());
 			singleHikingTO.setHikingDate(singleHiking.getHikingDate());
 			try {
-				GpxDataTO gpxDataTO = HikingDataFactory.deserializeGpxDataTO(singleHiking.getGpxData());
+				GpxDataTO gpxDataTO = (GpxDataTO)HikingDataFactory.deserializeGpxDataTO(singleHiking.getGpxData());
 				singleHikingTO.setGpxData(gpxDataTO);
 			}
 			catch(Exception e) {
 				
+			}
+			try{
+				String imageData = (String)HikingDataFactory.deserializeGpxDataTO(singleHiking.getImageData());
+				singleHikingTO.setImageData(imageData);
+			}
+			catch(Exception e){
+				logger.error(e.getMessage());
 			}
 			hikingDataTOList.add(singleHikingTO);
 		}

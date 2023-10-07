@@ -49,6 +49,10 @@ public class HikingData implements Serializable {
 	@Column(name = "gpx_data")
 	private byte[] gpxData;
 
+	@JdbcType(VarbinaryJdbcType.class)
+	@Column(name = "image_data")
+	private byte[] imageData;
+
 	public Long getId() {
 		return id;
 	}
@@ -103,5 +107,13 @@ public class HikingData implements Serializable {
 
 	public void setGpxData(byte[] gpxData) {
 		this.gpxData = gpxData;
+	}
+
+	public byte[] getImageData() {
+		return imageData;
+	}
+
+	public void setImageData(byte[] imageData) {
+		this.imageData = imageData;
 	}
 }

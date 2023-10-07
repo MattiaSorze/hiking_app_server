@@ -12,6 +12,8 @@ public class HikingDataTO {
 	private String status;
 	private GpxDataTO gpxData;
 
+	private String imageData;
+
 	public HikingDataTO() {
 		super();
 	}
@@ -77,5 +79,13 @@ public class HikingDataTO {
 
 	public void setGpxData(GpxDataTO gpxData) {
 		this.gpxData = gpxData;
+	}
+
+	public String getImageData() {
+		return imageData;
+	}
+
+	public void setImageData(String imageData) {
+		this.imageData = imageData;
 	}
 }
