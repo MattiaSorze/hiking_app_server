@@ -1,6 +1,7 @@
 package com.hikingapp.dto.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class HikingDataTO {
 
@@ -12,7 +13,7 @@ public class HikingDataTO {
 	private String status;
 	private GpxDataTO gpxData;
 
-	private String imageData;
+	private List<String> imageData;
 
 	public HikingDataTO() {
 		super();
@@ -81,11 +82,11 @@ public class HikingDataTO {
 		this.gpxData = gpxData;
 	}
 
-	public String getImageData() {
+	public List<String> getImageData() {
 		return imageData;
 	}
 
-	public void setImageData(String imageData) {
+	public void setImageData(List<String> imageData) {
 		this.imageData = imageData;
 	}
 }

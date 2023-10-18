@@ -2,6 +2,9 @@ package com.hikingapp.service;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 
 import org.slf4j.LoggerFactory;
@@ -44,7 +47,9 @@ public class DataService {
 				
 			}
 			try{
-				String imageData = (String)HikingDataFactory.deserializeGpxDataTO(singleHiking.getImageData());
+				ObjectMapper objectMapper = new ObjectMapper();
+				List<byte[]> binaryDataList = objectMapper.readValue(singleHiking.getImageData(), new TypeReference<List<byte[]>>() {});
+				List<String> imageData = HikingDataFactory.deserializeImageData(binaryDataList);
 				singleHikingTO.setImageData(imageData);
 			}
 			catch(Exception e){

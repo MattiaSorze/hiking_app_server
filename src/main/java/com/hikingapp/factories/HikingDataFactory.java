@@ -5,7 +5,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hikingapp.dto.model.GpxDataTO;
 import com.hikingapp.dto.model.HikingDataTO;
 import com.hikingapp.persistence.model.HikingData;
@@ -29,7 +33,9 @@ public class HikingDataFactory {
 			
 		}
 		try{
-			hikingDataEntity.setImageData(serializeGpxDataTO(hikingDataTO.getImageData()));
+			ObjectMapper objectMapper = new ObjectMapper();
+			String binaryDataListJson = objectMapper.writeValueAsString(serializeImageData(hikingDataTO.getImageData()));
+			hikingDataEntity.setImageData(binaryDataListJson);
 		}
 		catch(Exception e){
 
@@ -46,11 +52,29 @@ public class HikingDataFactory {
 	    return baos.toByteArray();
 	}
 
+	public static List<byte[]> serializeImageData(List<String> imageData) throws IOException {
+		List<byte[]> byteArrays = new ArrayList<>();
+		for (String base64String : imageData) {
+			byte[] byteArray = Base64.getDecoder().decode(base64String);
+			byteArrays.add(byteArray);
+		}
+		return byteArrays;
+	}
+
 	public static Object deserializeGpxDataTO(byte[] bytes) throws IOException, ClassNotFoundException {
 	    ByteArrayInputStream bais = new ByteArrayInputStream(bytes);
 	    ObjectInputStream ois = new ObjectInputStream(bais);
 	    Object gpxDataTO = ois.readObject();
 	    ois.close();
 	    return gpxDataTO;
+	}
+
+	public static List<String> deserializeImageData(List<byte[]> bytesList) throws IOException, ClassNotFoundException {
+		List<String> base64Strings = new ArrayList<>();
+		for(byte[] byteArray : bytesList){
+			String base64String = Base64.getEncoder().encodeToString(byteArray);
+			base64Strings.add(base64String);
+		}
+		return base64Strings;
 	}
 }

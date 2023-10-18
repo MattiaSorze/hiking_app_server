@@ -2,9 +2,12 @@ package com.hikingapp.persistence.model;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 import org.hibernate.annotations.JdbcType;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.Type;
+import org.hibernate.type.SqlTypes;
 import org.hibernate.type.descriptor.jdbc.VarbinaryJdbcType;
 
 import jakarta.persistence.Column;
@@ -49,9 +52,10 @@ public class HikingData implements Serializable {
 	@Column(name = "gpx_data")
 	private byte[] gpxData;
 
-	@JdbcType(VarbinaryJdbcType.class)
+	@Lob
 	@Column(name = "image_data")
-	private byte[] imageData;
+	@JdbcTypeCode(SqlTypes.JSON)
+	private String imageData;
 
 	public Long getId() {
 		return id;
@@ -109,11 +113,11 @@ public class HikingData implements Serializable {
 		this.gpxData = gpxData;
 	}
 
-	public byte[] getImageData() {
+	public String getImageData() {
 		return imageData;
 	}
 
-	public void setImageData(byte[] imageData) {
+	public void setImageData(String imageData) {
 		this.imageData = imageData;
 	}
 }
