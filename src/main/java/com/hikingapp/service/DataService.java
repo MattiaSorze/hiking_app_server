@@ -65,7 +65,8 @@ public class DataService {
 		hikingDataRepo.save(hikingData);
 	}
 	
-	public void deleteHikingDataFromId(Long id) {
+	public List<HikingDataTO> deleteHikingDataFromId(Long id) {
 		hikingDataRepo.deleteById(id);
+		return getHikingData();
 	}
 }

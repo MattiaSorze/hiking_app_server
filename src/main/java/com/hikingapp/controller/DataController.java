@@ -1,5 +1,6 @@
 package com.hikingapp.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -55,13 +56,14 @@ public class DataController {
 	
 	@PostMapping(value = "/deleteHikingDataFromId/{id}")
 	public ResponseEntity<?> deleteHikingDataFromId(@PathVariable("id") Long id) throws Exception {
+		List<HikingDataTO> hikingData = new ArrayList<>();
 		try {
-			dataService.deleteHikingDataFromId(id);
+			hikingData = dataService.deleteHikingDataFromId(id);
 		}
 		catch(Exception e) {
 			_logger.error("error while deleting hiking data : \n" + e.getMessage(),e);
 			throw new Exception(e.getMessage());
 		}
-		return ResponseEntity.ok().body(true);
+		return ResponseEntity.ok().body(hikingData);
 	}
 }
