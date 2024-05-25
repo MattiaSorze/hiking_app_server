@@ -60,9 +60,10 @@ public class DataService {
 		return hikingDataTOList;
 	}
 	
-	public void saveHikingData(HikingDataTO hikingDataTO) {
+	public List<HikingDataTO> saveHikingData(HikingDataTO hikingDataTO) {
 		HikingData hikingData = HikingDataFactory.createHikingDataEntityFromTO(hikingDataTO);
 		hikingDataRepo.save(hikingData);
+		return getHikingData();
 	}
 	
 	public List<HikingDataTO> deleteHikingDataFromId(Long id) {

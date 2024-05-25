@@ -36,7 +36,8 @@ public class DataController {
 	}
 	
 	@PostMapping(value = "/saveHikingData", consumes = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> saveHikingData(@RequestBody JsonNode hikingDataJsonNode) throws Exception {	
+	public ResponseEntity<?> saveHikingData(@RequestBody JsonNode hikingDataJsonNode) throws Exception {
+		List<HikingDataTO> hikingDataList = new ArrayList<>();
 		try{
 			Gson gson = new Gson();
 			HikingDataTO hikingDataTO = new HikingDataTO();
@@ -45,13 +46,13 @@ public class DataController {
 				hikingDataJson = hikingDataJsonNode.get("hikingData").toString();
 				hikingDataTO = gson.fromJson(hikingDataJson, HikingDataTO.class);
 			}
-			dataService.saveHikingData(hikingDataTO);
+			hikingDataList = dataService.saveHikingData(hikingDataTO);
 		}
 		catch(Exception e) {
 			_logger.error("error while saving hiking data : \n" + e.getMessage(),e);
 			throw new Exception(e.getMessage());
 		}
-		return ResponseEntity.ok().body(true);
+		return ResponseEntity.ok().body(hikingDataList);
 	}
 	
 	@PostMapping(value = "/deleteHikingDataFromId/{id}")
